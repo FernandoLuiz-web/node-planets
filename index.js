@@ -1,7 +1,6 @@
 const express   = require('express')
 const mongoose  = require('mongoose')
-
-const Planet = require('./Database/Planet')
+const planetsRoutes = require('./routes/planetsRoutes')
 
 const app = express();
 
@@ -24,33 +23,9 @@ app.get('/', (req, res) => {
     
 })
 
-app.post('/planet', async (req,res) => {
 
-    const {name, orderFromSun, hasRings, mainAtmosphere, surfaceTemperatureC} = req.body
+app.use('/planet', planetsRoutes)
 
-    if(!name){
-        res.status(422).json({error: 'O nome é obrigatório!'})
-    }
-    
-    const planet = {
-        name,
-        orderFromSun,
-        hasRings,
-        mainAtmosphere,
-        surfaceTemperatureC
-    }
-    
-    try{
-
-        await Planet.create(planet)
-
-        res.status(201).json({message: 'planeta cadastrado com sucesso!'})
-
-    }catch (error){
-        res.status(500).json({error: error})
-    }
-    
-})
 
 const DB_USER       = 'UserAdmin01Luiz'
 const DB_PASSWORD   = encodeURIComponent('UserADMINacessServer')
