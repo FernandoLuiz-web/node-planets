@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Planet = require('../Database/Planet')
 
+//Create
 router.post('/', async (req,res) => {
 
     const {name, orderFromSun, hasRings, mainAtmosphere, surfaceTemperatureC} = req.body
@@ -27,6 +28,19 @@ router.post('/', async (req,res) => {
         res.status(500).json({error: error})
     }
     
+})
+
+//Read
+router.get('/', async(req, res) => {
+    try{
+
+        const planets = await Planet.find()
+
+        res.status(200).json(planets)
+        
+    }catch(error){
+        res.status(500).json({error: error})
+    }
 })
 
 module.exports = router
