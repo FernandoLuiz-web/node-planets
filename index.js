@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express   = require('express')
 const mongoose  = require('mongoose')
 const planetsRoutes = require('./routes/planetsRoutes')
@@ -27,8 +28,8 @@ app.get('/', (req, res) => {
 app.use('/planet', planetsRoutes)
 
 
-const DB_USER       = 'UserAdmin01Luiz'
-const DB_PASSWORD   = encodeURIComponent('UserADMINacessServer')
+const DB_USER       = process.env.DB_USER
+const DB_PASSWORD   = process.env.DB_PASSWORD
 
 mongoose.connect(
     `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.hmcbxxd.mongodb.net/?retryWrites=true&w=majority`,
