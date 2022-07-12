@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const Planet = require('../Database/Planet')
+const Planet = require('../Models/Planet')
 
 //Create
 router.post('/', async (req,res) => {
