@@ -7,17 +7,17 @@ router.post('/', async (req,res) => {
     const {name, orderFromSun, hasRings, mainAtmosphere, surfaceTemperatureC} = req.body
 
     if(!name){
-        res.status(422).json({error: 'O nome é obrigatório!'})
+        res.status(400).json({error: 'O nome é obrigatório!'})
         return
     }
     
-    const planet = {
+    const planet = new Planet({
         name,
         orderFromSun,
         hasRings,
         mainAtmosphere,
         surfaceTemperatureC
-    }
+    })
     
     try{
 
@@ -27,7 +27,7 @@ router.post('/', async (req,res) => {
         return
         
     }catch (error){
-        res.status(500).json({error: error})
+        res.status(500).json({error: 'Aconteceu um erro no servidor, tente novamente mais tarde'})
         return
     }
     
@@ -43,7 +43,7 @@ router.get('/', async(req, res) => {
         return
         
     }catch(error){
-        res.status(500).json({error: error})
+        res.status(500).json({error: 'Aconteceu um erro no servidor, tente novamente mais tarde'})
         return
     }
 })
@@ -56,7 +56,7 @@ router.get('/:id', async (req, res) =>{
         const planet = await Planet.findOne({_id: id})
 
         if(!planet){
-            res.status(422).json({message: 'Planeta desconhecido!'})
+            res.status(404).json({message: 'Planeta desconhecido!'})
             return
         }
         
@@ -64,7 +64,7 @@ router.get('/:id', async (req, res) =>{
         return
 
     }catch (error){
-        res.status(500).json({error: error})
+        res.status(500).json({error: 'Aconteceu um erro no servidor, tente novamente mais tarde'})
         return
     }
 })
@@ -89,13 +89,13 @@ router.patch('/:id', async(req, res) =>{
         const updatePlanet = await Planet.updateOne({_id: id}, planet)
 
         if(updatePlanet.marchedCount === 0){
-            res.status(422).json({message: 'Planeta desconhecido!'})
+            res.status(404).json({message: 'Planeta desconhecido!'})
         }
         
         res.status(200).json(planet)
         
     }catch(error){
-        res.status(500).json({error: error})
+        res.status(500).json({error: 'Aconteceu um erro no servidor, tente novamente mais tarde'})
         return
     }
 })
@@ -109,7 +109,7 @@ router.delete('/:id', async(req, res) => {
         const planet = await Planet.findOne({_id: id})
 
         if(!planet){
-            res.status(422).json({message: 'Planeta desconhecido!'})
+            res.status(404).json({message: 'Planeta desconhecido!'})
             return
         }
 

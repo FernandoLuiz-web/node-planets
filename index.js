@@ -1,7 +1,10 @@
 require('dotenv').config()
 const express   = require('express')
 const mongoose  = require('mongoose')
-const planetsRoutes = require('./routes/planetsRoutes')
+
+//models routes
+const planetsRoutes = require('./routes/PlanetsRoutes')
+const userRoutes = require('./routes/UserRoutes')
 
 const app = express();
 
@@ -24,8 +27,11 @@ app.get('/', (req, res) => {
     
 })
 
-
+//routes
 app.use('/planet', planetsRoutes)
+
+app.use('/user', userRoutes)
+
 
 
 const DB_USER       = process.env.DB_USER
